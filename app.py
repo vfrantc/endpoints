@@ -4,8 +4,10 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, ge
 from werkzeug.security import generate_password_hash, check_password_hash
 #from geoalchemy2 import Geometry
 from flasgger import Swagger, swag_from
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 swagger = Swagger(app, template={
     "swagger": "2.0",
     "info": {
