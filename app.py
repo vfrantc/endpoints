@@ -23,7 +23,7 @@ swagger = Swagger(app, template={
     "securityDefinitions": {
         "Bearer": {
             "type": "apiKey",
-            "name": "Authorization",
+            "name": "/Authorization",
             "in": "header"
         }
     },
@@ -61,7 +61,7 @@ class Camera(db.Model):
     #geolocation = db.Column(Geometry("POINT"), nullable=False)
 
 #### USER BYSINESS LOGIC ####
-@app.route('auth/register', methods=['POST'])
+@app.route('/register', methods=['POST'])
 @swag_from({
     'tags': ['User'],
     'parameters': [
@@ -72,7 +72,7 @@ class Camera(db.Model):
             'schema': {
                 'type': 'object',
                 'properties': {
-                    'username': {'type': 'string'},
+                    'name': {'type': 'string'},
                     'password': {'type': 'string'}
                 }
             }
@@ -85,7 +85,7 @@ class Camera(db.Model):
 })
 def register():
     data = request.get_json()
-    username = data['username']
+    username = data['name']
     password = data['password']
 
     user = User.query.filter_by(username=username).first()
@@ -102,7 +102,7 @@ def register():
     return jsonify({'message': 'User registered successfully.'}), 201
 
 
-@app.route('auth/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 @swag_from({
     'tags': ['User'],
     'parameters': [
@@ -113,7 +113,7 @@ def register():
             'schema': {
                 'type': 'object',
                 'properties': {
-                    'username': {'type': 'string'},
+                    'name': {'type': 'string'},
                     'password': {'type': 'string'}
                 }
             }
@@ -126,7 +126,7 @@ def register():
 })
 def login():
     data = request.get_json()
-    username = data['username']
+    username = data['name']
     password = data['password']
 
     user = User.query.filter_by(username=username).first()
@@ -138,7 +138,7 @@ def login():
     return jsonify({'access_token': access_token})
 
 
-@app.route('auth/logout', methods=['POST'])
+@app.route('/logout', methods=['POST'])
 @jwt_required()
 @swag_from({
     'tags': ['User'],
