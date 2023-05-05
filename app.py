@@ -61,7 +61,7 @@ class Camera(db.Model):
     #geolocation = db.Column(Geometry("POINT"), nullable=False)
 
 #### USER BYSINESS LOGIC ####
-@app.route('/register', methods=['POST'])
+@app.route('auth/register', methods=['POST'])
 @swag_from({
     'tags': ['User'],
     'parameters': [
@@ -102,7 +102,7 @@ def register():
     return jsonify({'message': 'User registered successfully.'}), 201
 
 
-@app.route('/login', methods=['POST'])
+@app.route('auth/login', methods=['POST'])
 @swag_from({
     'tags': ['User'],
     'parameters': [
@@ -138,7 +138,7 @@ def login():
     return jsonify({'access_token': access_token})
 
 
-@app.route('/logout', methods=['POST'])
+@app.route('auth/logout', methods=['POST'])
 @jwt_required()
 @swag_from({
     'tags': ['User'],
